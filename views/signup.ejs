@@ -1,0 +1,35 @@
+<% layout('./layout/boiler-plate') %>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5 row">
+            <div class="col-md-2">
+                <img src="/images/Snapchat-1283668516.jpg" class="rounded mx-auto d-block" width="150" height="300"
+                    alt="">
+            </div>
+            <div class="col-md-10">
+                <h1 class="display-5 fw-bold">Kartik Agarwal</h1>
+                <br />
+                <form action="/Signup" method="post">
+                    <div class="input-group">
+                        <span class="input-group-text mb-3">First and last name</span>
+                        <input type="text" aria-label="First name" name="fname" placeholder="First name" class="form-control mb-3">
+                        <input type="text" aria-label="Last name" name="lname" placeholder="Last name" class="form-control mb-3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Email Address"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="basic-addon2">@example.com</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">&pointint;</span>
+                        <input type="text" class="form-control" name="uname" placeholder="Username" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="pass" placeholder="Password" aria-label="Password">
+                    </div>
+                    <button class="btn btn-primary btn-lg">&pointint;SignUp!</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
