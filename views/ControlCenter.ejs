@@ -1,18 +1,60 @@
-<% layout('./layout/boiler-plate') %>
-<div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5 row">
-        <div class="col-md-2">
-            <img src="/images/Snapchat-1283668516.jpg" class="rounded mx-auto d-block" width="150" height="300"
-                alt="">
-        </div>
-        <div class="col-md-10">
-            <h1 class="display-5 fw-bold">Kartik Agarwal</h1>
-            <br />
-            <form action="/SignOut" method="post">
-                
-                <button class="btn btn-primary btn-lg">&#x2202;SignOut!</button>
-            </form>
-        </div>
+<% layout('./layout/login_boiler_plate') %>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5 row">
+            <div class="col-md-2">
+                <img src="/images/Snapchat-1283668516.jpg" class="rounded mx-auto d-block" width="150" height="300"
+                    alt="">
+            </div>
+            <div class="col-md-10">
+                <h1 class="display-3 fw-bold">
+                    <form action="/SignOut" method="post">
+                        <%=fname + " " + lname%>
+                            <button class="btn btn-primary btn-sm">&#x2202;SignOut!</button>
+                    </form>
+                </h1>
+                <h3 class="display-5 fw-bold">
+                    <%=uname%>
+                </h3>
+                <br />
+                <br />
+                <h3 class="display-12">
+                    Create a New Post:
+                </h3>
+                <form action=<%="/Post/" + uname%> method="post">
+                    <div class="card text-white bg-dark">
+                        <label for="exampleFormControlInput1" class="form-label"><h3>&nbsp;Tittle: </h3></label>
+                        <input name="tittle" type="text" class="form-control" id="exampleFormControlInput1"
+                            placeholder="Give Your Heading Here">
+                    </div>
+                    <br/>
+                    <div class="card text-white bg-dark">
+                        <label for="exampleFormControlTextarea1" class="form-label"><h3>&nbsp;Description: </h3></label>
+                        <textarea name="desc" class="form-control" id="exampleFormControlTextarea1"
+                            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse erat velit, semper in accumsan vitae, maximus pretium libero. Sed tortor ante, tristique id cursus at, mollis sed felis. Etiam efficitur volutpat purus, et interdum lorem suscipit nec. Maecenas finibus massa sit amet velit eleifend vestibulum. Nulla at velit laoreet, auctor sapien ut, dictum felis. Donec ut quam eget eros ullamcorper fringilla eu non nisi. Ut varius eu arcu eu convallis. Pellentesque in faucibus magna. Praesent in nisi metus. Proin mattis accumsan elit quis cursus."
+                            rows="3"></textarea>
+                    </div>
+                    <br/>
+                    <button class="btn btn-primary btn-slg">PosT !!</button>
+                </form>
+                <br />
+                <% for (let pd of postdetail){ %>
+                    <div class="card text-white bg-dark text-center">
+                        <div class="card-header"><H1><%=pd.Tittle%></H1></div>
+                        <div class="card-body text-dark bg-light">
+                          <p class="card-text"><%=pd.Description%></p>
+                          <div class="text-muted">
+                            --<%=pd.username%>
+                        </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <form action="/Star" method="post">
+                                <button class="btn btn-primary btn-sm">&hearts; <%=pd.Stars%></button>
+                            </form>
+                        </div>
+                      </div>
+                      <br/>
+                    <%}%>
+            </div>
 
+        </div>
     </div>
-</div>

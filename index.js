@@ -8,6 +8,7 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const mongoose = require("mongoose");
 const User = require('./views/models/users')
+const BlogPost = require('./views/models/post')
 app.use(express.urlencoded({encoded: true}))
 app.engine('ejs',ejsMate)
 // Declaring Folders for css and image files
@@ -55,7 +56,7 @@ app.post('/Login', async(req,res)=>{
         const result = await bcrypt.compare(pw, hashpassword)
         if(result){
             req.session.username=uname;
-            res.redirect('/Secret')
+            res.redirect('/Secret/' + uname)
         }else{
             console.log("TRY AGAIN");  
             alert("Wrong UserID or Password");
@@ -80,7 +81,7 @@ app.post('/SignUp', async(req,res)=>{
     const collection = client.db("Portfolio").collection("UserData");
     const result = await collection.insertOne(user);
     req.session.username=uname;
-    res.redirect('/Secret')
+    res.redirect('/Secret/' + uname)
 })
 app.get('/SignUp',(req,res)=>{
     res.render('signup')
@@ -89,12 +90,45 @@ app.post('/SignOut',(req,res)=>{
     req.session.username=null;
     res.redirect('/');
 })
-app.get('/Secret',(req,res)=>{
+app.get('/Secret/:username',async(req,res)=>{
     if(!req.session.username){
         res.redirect('/Login');
     }else{
-        res.render('ControlCenter');
+        const query = {
+            username: req.params.username,
+        };
+        const collection = client.db("Portfolio").collection("UserData");
+        const udetail = await collection.findOne(query);
+        const post_collection = client.db("Portfolio").collection("BlogPost");
+        const post_query = {
+            visibility : 'v'
+        };
+        const post_details = await post_collection.find({});
+        const allValues = await post_details.toArray();
+        console.log(allValues)
+        // while (await post_details.hasNext()) {
+        //     await post_details.next();
+        // }
+        // const data= {}
+        // await post_details.forEach(data = data + console.dir());
+        res.render('ControlCenter',{fname:udetail.fname,lname:udetail.lname,uname:udetail.username,postdetail:allValues.reverse()});
     }
+})
+
+app.post('/Post/:username', async(req,res)=>{
+    const {desc , tittle} = req.body;
+    console.log("yooo"+req.body)
+    const blogpost = new BlogPost({
+        username: req.params.username,
+        Tittle : tittle,
+        Description: desc,
+        Stars : 0,
+        visibility : 'v'
+    })
+    const collection = client.db("Portfolio").collection("BlogPost");
+    const result = await collection.insertOne(blogpost);
+    const add= '/Secret/'+req.params.username
+    res.redirect(add)
 })
 app.listen(3000, ()=>{
     console.log("Server Started!")

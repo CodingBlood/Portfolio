@@ -9,19 +9,19 @@ const UserSchema = new mongoose.Schema({
     },
     password : {
         type : String,
-        required : [true, "usename cannot be left Blanck"]
+        required : [true, "password cannot be left Blanck"]
     },
     fname : {
         type : String,
-        required : [true, "usename cannot be left Blanck"]
+        required : [true, "fname cannot be left Blanck"]
     },
     lname : {
         type : String,
-        required : [true, "usename cannot be left Blanck"]
+        required : [true, "lname cannot be left Blanck"]
     },
     email : {
         type : String,
-        required : [true, "usename cannot be left Blanck"]
+        required : [true, "email cannot be left Blanck"]
     }
 })
 module.exports = mongoose.model('User', UserSchema);
