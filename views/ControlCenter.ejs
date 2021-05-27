@@ -49,8 +49,11 @@
                         </div>
                         </div>
                         <div class="card-footer text-muted">
-                            <form action=<%="/Star/" + pd._id + "/" + uname %> method="post">
-                                <button class="btn btn-primary btn-sm">&hearts; <%=pd.Stars%></button>
+                            <form action=<%="/Star/" + pd._id + "/" + uname %> style ='display:inline;' method="post">
+                            <button class="btn btn-primary btn-sm">&hearts; <%=pd.Stars%></button>
+                            </form>
+                            <form action=<%="/DownStar/" + pd._id + "/" + uname %> style ='display:inline;' method="post">
+                            <button class="btn btn-primary btn-sm">&#128078; <%=pd.DownStars%></button>
                             </form>
                         </div>
                       </div>
