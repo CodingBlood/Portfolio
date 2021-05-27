@@ -19,6 +19,14 @@ const PostSchema = new mongoose.Schema({
         type : Number,
         required : [true, "Stars cannot be left Blanck"]
     },
+    DownStars : {
+        type : Number,
+        required : [true, "Stars cannot be left Blanck"]
+    },
+    Time : {
+      type: Date,
+      default: Date.now
+    },
     visibility : {
         type : String,
         required : [true, "visibility cannot be left Blanck"]
