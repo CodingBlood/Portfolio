@@ -1,0 +1,29 @@
+<% layout('./layout/login_boiler_plate') %>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5 row">
+            <% for (let pd of postdetail){ %>
+                <br/>
+                <div class="card text-white bg-dark text-center" style="background-image: url(/images/pexels-daniel-absi-952670.jpg);background-size: contain;">
+                    <div class="card-header">
+                        <H1>
+                            <%=pd.Tittle%>
+                        </H1>
+                    </div>
+                    <div class="card-body text-dark bg-light">
+                        <p class="card-text">
+                            <%=pd.Description%>
+                        </p>
+                        <div class="text-muted">
+                            --<%=pd.username%>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <form action=<%="/Star/" + pd._id + "/" + uname %> method="post">
+                            <button class="btn btn-primary btn-sm">&hearts; <%=pd.Stars%></button>
+                        </form>
+                    </div>
+                </div>
+                <h3 >&nbsp;</h3>
+                <%}%>
+        </div>
+    </div>

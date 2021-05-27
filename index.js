@@ -1,5 +1,6 @@
 //impoting libraries and configuring them
 const express = require("express");
+const BSON = require('bson');
 const session = require('express-session')
 const app = express();
 let alert = require('alert');
@@ -86,7 +87,7 @@ app.post('/SignUp', async(req,res)=>{
 app.get('/SignUp',(req,res)=>{
     res.render('signup')
 })
-app.post('/SignOut',(req,res)=>{
+app.get('/SignOut',(req,res)=>{
     req.session.username=null;
     res.redirect('/');
 })
@@ -101,17 +102,58 @@ app.get('/Secret/:username',async(req,res)=>{
         const udetail = await collection.findOne(query);
         const post_collection = client.db("Portfolio").collection("BlogPost");
         const post_query = {
-            visibility : 'v'
+            username: req.params.username
         };
-        const post_details = await post_collection.find({});
+        const post_details = await post_collection.find(post_query).sort({"Stars": 1});
         const allValues = await post_details.toArray();
-        console.log(allValues)
-        // while (await post_details.hasNext()) {
-        //     await post_details.next();
-        // }
-        // const data= {}
-        // await post_details.forEach(data = data + console.dir());
         res.render('ControlCenter',{fname:udetail.fname,lname:udetail.lname,uname:udetail.username,postdetail:allValues.reverse()});
+    }
+})
+app.get('/Secret',async(req,res)=>{
+    if(!req.session.username){
+        res.redirect('/Login');
+    }else{
+        res.redirect('/Secret/' + req.session.username)
+    }
+})
+
+app.get('/TBlogs',async(req,res)=>{
+    if(!req.session.username){
+        res.redirect('/Login');
+    }else{
+        const post_collection = client.db("Portfolio").collection("BlogPost");
+        const post_details = await post_collection.find({}).sort({"Stars": 1});
+        const allValues = await post_details.toArray();
+        res.render('TBlogs',{uname:req.session.username,postdetail:allValues.reverse()});
+    }
+})
+app.post('/Star/:id/:username',async(req,res)=>{
+    if(!req.session.username){
+        res.redirect('/Login');
+    }else{
+        const post_collection = client.db("Portfolio").collection("BlogPost");
+        post_collection.updateOne({_id:BSON.ObjectId(req.params.id)},{
+            $inc: {
+                Stars: +1
+            }
+        }, (err,result) => {
+            if(err) console.log(err);
+            console.log(result)
+        });
+        
+        post_collection.findOne({_id:BSON.ObjectId(req.params.id)}, (err, post) => {
+            if(post){
+                console.log("*VVHBK&*T^%", post)
+            }
+            if(err){
+                console.log(err)
+            }
+        });
+        // itemsCollection.updateOne(query, update, options)
+        // const allValues = await post_details.toArray();
+        // console.log(allValues)
+        // res.redirect('/Secret/' + req.params.username)
+        res.redirect('back')
     }
 })
 

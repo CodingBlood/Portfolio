@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-10">
                 <h1 class="display-3 fw-bold">
-                    <form action="/SignOut" method="post">
+                    <form action="/SignOut" method="get">
                         <%=fname + " " + lname%>
                             <button class="btn btn-primary btn-sm">&#x2202;SignOut!</button>
                     </form>
@@ -37,8 +37,10 @@
                     <button class="btn btn-primary btn-slg">PosT !!</button>
                 </form>
                 <br />
+                </div>
+                <div class="col-md-12"></div>
                 <% for (let pd of postdetail){ %>
-                    <div class="card text-white bg-dark text-center">
+                    <div class="card text-white bg-dark text-center" style="background-image: url(/images/pexels-daniel-absi-952670.jpg);background-size: contain;">
                         <div class="card-header"><H1><%=pd.Tittle%></H1></div>
                         <div class="card-body text-dark bg-light">
                           <p class="card-text"><%=pd.Description%></p>
@@ -47,12 +49,12 @@
                         </div>
                         </div>
                         <div class="card-footer text-muted">
-                            <form action="/Star" method="post">
+                            <form action=<%="/Star/" + pd._id + "/" + uname %> method="post">
                                 <button class="btn btn-primary btn-sm">&hearts; <%=pd.Stars%></button>
                             </form>
                         </div>
                       </div>
-                      <br/>
+                      <h3>&nbsp;</h3>
                     <%}%>
             </div>
 
