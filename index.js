@@ -205,7 +205,7 @@ app.post('/Post/:username', async(req,res)=>{
     const add= '/Secret/'+req.params.username
     res.redirect(add)
 })
-const port = process.env.PROCESS || 3000
+const port = process.env.PORT || 3000
 app.listen(port, ()=>{
     console.log("Server Started!")
 })
